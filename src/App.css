@@ -32,7 +32,7 @@
   margin: 0 auto;
   margin-top: 3%;
   position: relative;
-  width: 75%;
+  width: 85%;
   border: 1px solid black;
   text-align: center;
   border-radius: 10px;
@@ -43,7 +43,7 @@
   margin: 0 auto;
   margin-top: 10%;
   position: relative;
-  width: 75%;
+  width: 50%;
   border: 1px solid black;
   text-align: center;
   border-radius: 10px;
@@ -62,9 +62,19 @@ li {
 /* USE ABOVE for APP.css */
 .dailyTemps {
   display: inline-flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 html {
   background-image: url(assets/SKY.webp);
 }
 /* USE ABOVE FOR DAILYWEATHER.CSS */
+
+.weather-icon {
+  font-size: 40px;
+}
+
+.weather-icon-daily {
+  font-size: 30px;
+}
