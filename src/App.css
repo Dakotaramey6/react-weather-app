@@ -47,7 +47,21 @@
   border: 1px solid black;
   text-align: center;
   border-radius: 10px;
-  background-color: rgba(240, 248, 255, 0.366);
+  background-color: rgba(240, 248, 255, 0.549);
+  display: flex;
+  justify-content: space-around;
+}
+
+.daily-left {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.daily-right {
+}
+
+.current-temp {
+  font-size: 50px;
 }
 
 .btn-panel {
@@ -57,6 +71,10 @@
 
 li {
   list-style-type: none;
+}
+
+.weekly-cast-header {
+  margin-bottom: 20px;
 }
 
 /* USE ABOVE for APP.css */
@@ -72,7 +90,7 @@ html {
 /* USE ABOVE FOR DAILYWEATHER.CSS */
 
 .weather-icon {
-  font-size: 40px;
+  font-size: 50px;
 }
 
 .weather-icon-daily {

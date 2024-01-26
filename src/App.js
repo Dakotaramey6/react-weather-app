@@ -20,21 +20,25 @@ function App() {
       .catch((error) => console.error(error));
   }, []);
 
-  function weatherCalculation(whatToIterate, weatherIcon) {
+  function weatherCalculation(whatToIterate, weatherIcon, weatherStatus) {
     if (whatToIterate.values.precipitationProbabilityAvg > 25) {
       weatherIcon = "🌧";
+      weatherStatus = "Rain";
     } else if (whatToIterate.values.cloudCoverAvg > 50) {
       weatherIcon = "☁️";
+      weatherStatus = "Cloudy";
     } else if (whatToIterate.values.cloudCoverAvg < 50) {
       weatherIcon = "⛅️";
+      weatherStatus = "Partly Cloudy";
     } else if (whatToIterate.values.freezingRainIntensityMax > 0) {
       weatherIcon = "🥶🌧";
+      weatherStatus = "Freezing Rain";
     } else if (whatToIterate.values.snowIntensityAvg > 0) {
       weatherIcon = "🌨";
-    } else if (localTime < 19) {
-      weatherIcon = "🌙";
+      weatherStatus = "Snow";
     } else {
       weatherIcon = "☀️";
+      weatherStatus = "Clear";
     }
     return weatherIcon;
   }
@@ -53,6 +57,7 @@ function App() {
             />
           </div>
           <div className="WeeklyCast">
+            <h2 className="weekly-cast-header">Upcoming Weather</h2>
             <DailyWeather
               daily={daily}
               weatherCalculation={weatherCalculation}
@@ -72,25 +77,14 @@ function DailyWeather({ daily, weatherCalculation }) {
           <p>{dailys.time.substring(dailys.time.indexOf("T"), -1)}</p>
           <p className="weather-icon-daily ">{weatherCalculation(dailys)}</p>
           <p>
-            Low Temp:{" "}
             {Math.round(
               parseFloat((dailys.values.temperatureMin * 9) / 5 + 32)
-            )}{" "}
-            °F
-          </p>
-          <p>
-            Average Temp:
-            {Math.round(
-              parseFloat((dailys.values.temperatureAvg * 9) / 5 + 32)
-            )}{" "}
-            °F
-          </p>
-          <p>
-            High Temp:{" "}
+            )}
+            °/
             {Math.round(
               parseFloat((dailys.values.temperatureMax * 9) / 5 + 32)
-            )}{" "}
-            °F
+            )}
+            °
           </p>
           <p>{dailys.values.precipitationProbabilityAvg} % of precipitation</p>
         </li>
@@ -102,24 +96,36 @@ function DailyWeather({ daily, weatherCalculation }) {
 function TodaysWeather({ daily, weatherCalculation, localTime }) {
   return (
     <>
-      <h2>Today's weather</h2>
-      <p className="weather-icon">{weatherCalculation(daily[0])}</p>
-      <p>
-        Today's Low:{" "}
-        {Math.round(parseFloat((daily[0].values.temperatureMin * 9) / 5 + 32))}{" "}
-        °F
-      </p>
-      <p>
-        Today's Average:{" "}
-        {Math.round(parseFloat((daily[0].values.temperatureAvg * 9) / 5 + 32))}{" "}
-        °F
-      </p>
-      <p>
-        Today's High:{" "}
-        {Math.round(parseFloat((daily[0].values.temperatureMax * 9) / 5 + 32))}{" "}
-        °F
-      </p>
-      <p>{daily[0].values.precipitationProbabilityAvg} % of precipitation</p>
+      <div className="daily-left">
+        <p className="weather-icon">{weatherCalculation(daily[0])}</p>
+        <div>
+          <p className="current-temp">
+            {Math.round(
+              parseFloat((daily[0].values.temperatureAvg * 9) / 5 + 32)
+            )}{" "}
+            °
+          </p>
+        </div>
+      </div>
+
+      <div className="daily-right-top">
+        <p>
+          Low Temp{" "}
+          {Math.round(
+            parseFloat((daily[0].values.temperatureMin * 9) / 5 + 32)
+          )}{" "}
+          °F
+        </p>
+
+        <p>
+          High Temp{" "}
+          {Math.round(
+            parseFloat((daily[0].values.temperatureMax * 9) / 5 + 32)
+          )}{" "}
+          °F
+        </p>
+        <p>Precipitation {daily[0].values.precipitationProbabilityAvg} %</p>
+      </div>
     </>
   );
 }
