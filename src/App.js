@@ -1,15 +1,13 @@
 import "./App.css";
-// import url from "./APICall";
+import url from "./APICall";
 import { useEffect, useState } from "react";
 
 function App() {
   const [isLoading, setIsloading] = useState(true);
   const [daily, setDaily] = useState([]);
-  const [active, setActive] = useState("Today's Forecast");
-
-  const handleOnClickbtn = ({ target }) => {
-    setActive(() => target.value);
-  };
+  let usersTime = new Date();
+  let localTime = usersTime.getHours();
+  console.log(localTime);
 
   useEffect(() => {
     fetch(url)
@@ -22,22 +20,40 @@ function App() {
       .catch((error) => console.error(error));
   }, []);
 
+  function weatherCalculation(whatToIterate, weatherIcon) {
+    if (whatToIterate.values.rainIntensityAvg > 0) {
+      weatherIcon = "🌧";
+    } else if (whatToIterate.values.cloudCoverAvg > 50) {
+      weatherIcon = "☁";
+    } else if (whatToIterate.values.cloudCoverAvg < 50) {
+      weatherIcon = "⛅️";
+    } else if (whatToIterate.values.freezingRainIntensityMax > 0) {
+      weatherIcon = "🥶🌧";
+    } else if (whatToIterate.values.snowIntensityAvg > 0) {
+      weatherIcon = "🌨";
+    } else if (localTime < 19) {
+      weatherIcon = "🌙";
+    } else {
+      weatherIcon = "☀️";
+    }
+    return weatherIcon;
+  }
+
   return (
-    <div className="App">
+    <div>
       {isLoading ? (
         <Spinner isLoading={isLoading} />
       ) : (
         <>
-          <div className="btn-panel">
-            <Buttons onClick={handleOnClickbtn}>Daily Forecast</Buttons>
-            <Buttons onClick={handleOnClickbtn}>Today's Forecast</Buttons>
+          <div className="TodaysForecast">
+            <TodaysWeather
+              daily={daily}
+              weatherCalculation={weatherCalculation}
+            />
           </div>
-
-          {active === "Daily Forecast" ? (
+          <div className="WeeklyCast">
             <DailyWeather daily={daily} />
-          ) : (
-            <TodaysWeather daily={daily} />
-          )}
+          </div>
         </>
       )}
     </div>
@@ -49,7 +65,7 @@ function DailyWeather({ daily }) {
     <ul className="dailyTemps">
       {daily.map((dailys, i) => (
         <li key={i}>
-          <p>{dailys.time.split("T")}</p>
+          <p>{dailys.time.substring(dailys.time.indexOf("T"), -1)}</p>
           <p>
             Low Temp:{" "}
             {Math.round(
@@ -77,9 +93,13 @@ function DailyWeather({ daily }) {
   );
 }
 
-function TodaysWeather({ daily }) {
+function TodaysWeather({ daily, weatherCalculation }) {
+  let WeatherStatusIcon;
+  weatherCalculation(daily[0], WeatherStatusIcon);
+
   return (
     <>
+      <p className="weather-Icon">{WeatherStatusIcon}</p>
       <p>
         Today's Low:{" "}
         {Math.round(parseFloat((daily[0].values.temperatureMin * 9) / 5 + 32))}{" "}
@@ -96,14 +116,6 @@ function TodaysWeather({ daily }) {
         °F
       </p>
     </>
-  );
-}
-
-function Buttons(props) {
-  return (
-    <button onClick={props.onClick} value={props.children}>
-      {props.children}
-    </button>
   );
 }
 
