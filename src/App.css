@@ -19,3 +19,52 @@
 .load-menu {
   color: #3ba5ec;
 }
+
+/* USE THE ABOVE FOR SPINNER.CSS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.WeeklyCast {
+  margin: 0 auto;
+  margin-top: 3%;
+  position: relative;
+  width: 75%;
+  border: 1px solid black;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(240, 248, 255, 0.366);
+}
+
+.TodaysForecast {
+  margin: 0 auto;
+  margin-top: 10%;
+  position: relative;
+  width: 75%;
+  border: 1px solid black;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(240, 248, 255, 0.366);
+}
+
+.btn-panel {
+  display: inline-flex;
+  height: 25%;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* USE ABOVE for APP.css */
+.dailyTemps {
+  display: inline-flex;
+}
+
+html {
+  background-image: url(assets/SKY.webp);
+}
+/* USE ABOVE FOR DAILYWEATHER.CSS */
