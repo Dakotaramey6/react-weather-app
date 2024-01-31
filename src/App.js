@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { DailyWeather } from "./DailyWeather";
 import { TodaysWeather } from "./TodaysWeather";
 import { Spinner } from "./Spinner";
-import { weatherCalculation } from "./HelperFunctions/WeatherCalc";
 import { WeatherStatus } from "./HelperFunctions/WeatherStatus";
 import apikey from "./APICall";
 import "./App.css";
@@ -11,8 +10,6 @@ function App() {
   const [isLoading, setIsloading] = useState(true);
   const [daily, setDaily] = useState([]);
   const [changeTempType, setChangeTempType] = useState("F");
-  let usersTime = new Date();
-  let localTime = usersTime.getHours();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -31,6 +28,26 @@ function App() {
       console.error("Browser Not supported");
     }
   }, []);
+
+  function weatherCalculation(whatToIterate, weatherIcon) {
+    if (whatToIterate.values.precipitationProbabilityAvg > 25) {
+      weatherIcon = "🌧";
+    } else if (
+      whatToIterate.values.cloudCoverAvg < 50 &&
+      whatToIterate.values.cloudCoverAvg > 20
+    ) {
+      weatherIcon = "⛅️";
+    } else if (whatToIterate.values.freezingRainIntensityMax > 0) {
+      weatherIcon = "🥶🌧";
+    } else if (whatToIterate.values.snowIntensityAvg > 0) {
+      weatherIcon = "🌨";
+    } else if (whatToIterate.values.cloudCoverAvg > 50) {
+      weatherIcon = "☁️";
+    } else {
+      weatherIcon = "☀️";
+    }
+    return weatherIcon;
+  }
 
   return (
     <div>

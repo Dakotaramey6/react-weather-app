@@ -5,8 +5,8 @@ export function DailyWeather({ daily, weatherCalculation, WeatherStatus }) {
         <li key={i}>
           <p>{dailys.time.substring(dailys.time.indexOf("T"), -1)}</p>
           <p className="weather-icon-daily ">{weatherCalculation(dailys)}</p>
-          <p>{WeatherStatus(WeatherStatus(dailys))}</p>
-          <p></p>
+          {/* <p>{WeatherStatus(weatherCalculation(dailys))}</p> */}
+
           <p>
             {Math.round(
               parseFloat((dailys.values.temperatureMax * 9) / 5 + 32)

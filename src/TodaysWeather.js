@@ -9,7 +9,7 @@ export function TodaysWeather({
     <>
       <div className="daily-left">
         <p className="weather-icon">{weatherCalculation(daily[0])}</p>
-        <p>{WeatherStatus(daily[0])}</p>
+        {/* <p>{WeatherStatus(weatherCalculation(daily[0]))}</p> */}
         <div>
           <p className="current-temp">
             {changeTempType === "F"

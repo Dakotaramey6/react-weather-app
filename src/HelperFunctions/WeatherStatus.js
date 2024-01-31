@@ -1,7 +1,5 @@
-import { weatherCalculation } from "./WeatherCalc";
-
-export function WeatherStatus(stat) {
-  let icon = weatherCalculation(stat);
+export function WeatherStatus(fun) {
+  let icon = fun();
   let status;
 
   switch (icon) {
