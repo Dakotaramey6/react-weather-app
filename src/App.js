@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { DailyWeather } from "./DailyWeather";
 import { TodaysWeather } from "./TodaysWeather";
 import { Spinner } from "./Spinner";
-import { WeatherStatus } from "./HelperFunctions/WeatherStatus";
 import apikey from "./APICall";
 import "./App.css";
 
@@ -31,20 +30,20 @@ function App() {
 
   function weatherCalculation(whatToIterate, weatherIcon) {
     if (whatToIterate.values.precipitationProbabilityAvg > 25) {
-      weatherIcon = "🌧";
+      weatherIcon = ["🌧", "Rain"];
     } else if (
       whatToIterate.values.cloudCoverAvg < 50 &&
       whatToIterate.values.cloudCoverAvg > 20
     ) {
-      weatherIcon = "⛅️";
+      weatherIcon = ["⛅️", "Partly Cloudy"];
     } else if (whatToIterate.values.freezingRainIntensityMax > 0) {
-      weatherIcon = "🥶🌧";
+      weatherIcon = ["🥶🌧", "freezing Rain"];
     } else if (whatToIterate.values.snowIntensityAvg > 0) {
-      weatherIcon = "🌨";
+      weatherIcon = ["🌨", "Snow"];
     } else if (whatToIterate.values.cloudCoverAvg > 50) {
-      weatherIcon = "☁️";
+      weatherIcon = ["☁️", "Cloudy"];
     } else {
-      weatherIcon = "☀️";
+      weatherIcon = ["☀️", "Clear"];
     }
     return weatherIcon;
   }
@@ -56,12 +55,12 @@ function App() {
       ) : (
         <>
           <div className="TodaysForecast">
+            <h2 className="daily-cast-header">Today's Weather</h2>
             <TodaysWeather
               daily={daily}
               weatherCalculation={weatherCalculation}
               changeTempType={changeTempType}
               setChangeTempType={setChangeTempType}
-              WeatherStatus={WeatherStatus}
             />
           </div>
           <div className="WeeklyCast">
@@ -69,7 +68,6 @@ function App() {
             <DailyWeather
               daily={daily}
               weatherCalculation={weatherCalculation}
-              WeatherStatus={WeatherStatus}
             />
           </div>
         </>

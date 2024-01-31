@@ -3,13 +3,14 @@ export function TodaysWeather({
   weatherCalculation,
   changeTempType,
   setChangeTempType,
-  WeatherStatus,
 }) {
   return (
-    <>
+    <div className="daily-info">
       <div className="daily-left">
-        <p className="weather-icon">{weatherCalculation(daily[0])}</p>
-        {/* <p>{WeatherStatus(weatherCalculation(daily[0]))}</p> */}
+        <div>
+          <p className="weather-icon">{weatherCalculation(daily[0])[0]}</p>
+          <p className="weather-status">{weatherCalculation(daily[0])[1]}</p>
+        </div>
         <div>
           <p className="current-temp">
             {changeTempType === "F"
@@ -50,6 +51,6 @@ export function TodaysWeather({
           %
         </p>
       </div>
-    </>
+    </div>
   );
 }
